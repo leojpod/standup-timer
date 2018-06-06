@@ -81,16 +81,5 @@
     display: inline-block;
     transform: rotate(-.25turn);
   }
-
-  // @each $name, $pair in $colors {
-    // $color: nth($pair, 1);
-    // $color-invert: nth($pair, 2);
-
-    // &.is-#{$name} {
-      // & > svg {
-        // color: $color;
-      // }
-    // }
-  // }
 }
 

@@ -26,9 +26,9 @@ clockDisplay isFillingUp percent =
         classNames =
             "time-viewer "
                 ++ (if isFillingUp then
-                        "is-green"
+                        "fc-red"
                     else
-                        "is-wolf-gray"
+                        "fc-primary"
                    )
     in
         div [ class classNames ]
