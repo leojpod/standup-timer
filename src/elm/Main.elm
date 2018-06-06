@@ -5,7 +5,7 @@ import Html
 
 -- local imports
 
-import Model exposing (Model)
+import Model exposing (Model, initModel)
 import View exposing (view)
 import Update exposing (Msg, update, subscriptions)
 
@@ -15,7 +15,7 @@ import Update exposing (Msg, update, subscriptions)
 
 init : ( Model, Cmd Msg )
 init =
-    ( {}, Cmd.none )
+    ( initModel, Cmd.none )
 
 
 
