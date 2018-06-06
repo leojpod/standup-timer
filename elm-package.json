@@ -1,6 +1,6 @@
 {
     "version": "1.0.0",
-    "summary": "helpful summary of your project, less than 80 characters",
+    "summary": "small tool to help at standup",
     "repository": "https://github.com/user/project.git",
     "license": "BSD3",
     "source-directories": [
@@ -14,5 +14,6 @@
         "elm-lang/svg": "2.0.0 <= v < 3.0.0",
         "folkertdev/svg-path-dsl": "2.0.0 <= v < 3.0.0"
     },
-    "elm-version": "0.18.0 <= v < 0.19.0"
+    "elm-version": "0.18.0 <= v < 0.19.0",
+    "homepage": "https://repositive.github.io/standup-timer/"
 }
