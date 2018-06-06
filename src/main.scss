@@ -1,0 +1,96 @@
+/* ==========================================================================
+   TEMPLATE IMPORT SHEET
+   ========================================================================== */
+
+/*
+  Docs:
+    To use this package,
+    - copy this template import sheet
+    - ensure the path to node_modules is correct
+      (could use e.g. node-sass includePaths to make the paths neater)
+    - insert custom settings, components & utility styles in the specified structure
+*/
+
+/*
+  SETTINGS
+*/
+
+@import '@repositive/liz-skin/settings/color';
+@import '@repositive/liz-skin/settings/spacing';
+@import '@repositive/liz-skin/settings/layout-and-breakpoints';
+@import '@repositive/liz-skin/settings/typography';
+@import '@repositive/liz-skin/settings/misc-ui';
+
+  /* Custom - INSERT CUSTOM SETTINGS HERE */
+  // @import "custom/settings/...";
+
+/*
+  RESET
+*/
+
+@import '@repositive/liz-skin/reset/normalize';
+@import '@repositive/liz-skin/reset/box-sizing';
+@import '@repositive/liz-skin/reset/custom-reset';
+
+  /* Custom - INSERT CUSTOM RESET HERE */
+  // @import "custom/reset/...";
+
+/*
+  COMPONENTS
+*/
+
+@import '@repositive/liz-skin/components/balloons';
+@import '@repositive/liz-skin/components/grid-wrapper';
+@import '@repositive/liz-skin/components/grid';
+@import '@repositive/liz-skin/components/list';
+
+  /* Custom - INSERT CUSTOM COMPONENTS HERE */
+  // @import "custom/components/...";
+
+/*
+  UTILITY CLASSES
+*/
+
+@import '@repositive/liz-skin/utilities/border';
+@import '@repositive/liz-skin/utilities/color';
+@import '@repositive/liz-skin/utilities/cursor';
+@import '@repositive/liz-skin/utilities/display';
+@import '@repositive/liz-skin/utilities/flex';
+@import '@repositive/liz-skin/utilities/font-styles';
+@import '@repositive/liz-skin/utilities/icon';
+@import '@repositive/liz-skin/utilities/margin';
+@import '@repositive/liz-skin/utilities/overflow';
+@import '@repositive/liz-skin/utilities/padding';
+@import '@repositive/liz-skin/utilities/position';
+@import '@repositive/liz-skin/utilities/type-setting';
+
+  /* Custom - INSERT CUSTOM UTILITIES HERE */
+  // @import "custom/utilities/...";
+
+
+@import '@repositive/ui-library/app/styles/ui-library';
+
+
+.time-viewer {
+  width: 80vw;
+  max-width: 45vh;
+  margin-left: auto;
+  margin-right: auto;
+
+  & > svg {
+    display: inline-block;
+    transform: rotate(-.25turn);
+  }
+
+  // @each $name, $pair in $colors {
+    // $color: nth($pair, 1);
+    // $color-invert: nth($pair, 2);
+
+    // &.is-#{$name} {
+      // & > svg {
+        // color: $color;
+      // }
+    // }
+  // }
+}
+
