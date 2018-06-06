@@ -2,22 +2,84 @@ module View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import Svg
 import Svg.Path
 import Svg.Attributes exposing (viewBox)
+import Time
 
 
 -- local imports
 
-import Model exposing (Model)
-import Update exposing (Msg)
+import Model exposing (Model, CountDownState(..))
+import Update exposing (Msg(..))
 
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ clockDisplay True 0.6542
-        ]
+    let
+        headerMessage =
+            case model.countdownState of
+                Paused Nothing ->
+                    "Get Ready"
+
+                Paused _ ->
+                    "Click/Tap anywhere to resume"
+
+                Ticking True _ ->
+                    "We're listening"
+
+                Ticking False _ ->
+                    "Wrap up quicker!"
+
+        bottomMessage =
+            case model.countdownState of
+                Paused Nothing ->
+                    "On your mark"
+
+                Paused (Just (Ticking _ timeLeft)) ->
+                    (toString <| ceiling <| Time.inSeconds timeLeft)
+
+                Paused (Just (Paused _)) ->
+                    Debug.crash "this should never happen!"
+
+                Ticking _ timeLeft ->
+                    (toString <| ceiling <| Time.inSeconds timeLeft)
+
+        ( warningMode, percentLeft ) =
+            case model.countdownState of
+                Paused Nothing ->
+                    ( False, 0.6542 )
+
+                -- this is just an arbitrary number to show the piece of UI
+                Paused (Just (Ticking isInTime timeLeft)) ->
+                    if isInTime then
+                        ( False, (model.config.speachTime - timeLeft) / model.config.speachTime )
+                    else
+                        ( True, (model.config.allowedOverTime - timeLeft) / model.config.allowedOverTime )
+
+                Paused (Just (Paused _)) ->
+                    Debug.crash "this should never happen!"
+
+                Ticking True timeLeft ->
+                    ( False, (model.config.speachTime - timeLeft) / model.config.speachTime )
+
+                Ticking False timeLeft ->
+                    ( True, (model.config.allowedOverTime - timeLeft) / model.config.allowedOverTime )
+    in
+        div [ class "grid-wrapper grid-wrapper-stepped", onClick ToggleTimer ]
+            [ div [ class "grid" ]
+                [ div [ class "grid__col--1-of-2 grid__col--centered" ]
+                    [ div [ class " flex flex-column justify-center items-center" ]
+                        [ h1 [ class "fs4" ]
+                            [ text headerMessage ]
+                        , clockDisplay warningMode percentLeft
+                        , h2 [ class "fs2" ]
+                            [ text bottomMessage ]
+                        ]
+                    ]
+                ]
+            ]
 
 
 clockDisplay : Bool -> Float -> Html Msg
@@ -28,7 +90,7 @@ clockDisplay isFillingUp percent =
                 ++ (if isFillingUp then
                         "fc-red"
                     else
-                        "fc-primary"
+                        "fc-teal"
                    )
     in
         div [ class classNames ]

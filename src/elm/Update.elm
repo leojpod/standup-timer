@@ -1,4 +1,4 @@
-module Update exposing (Msg, update, subscriptions)
+module Update exposing (Msg(..), update, subscriptions)
 
 import Model exposing (Model, CountDownState(..))
 import Time
