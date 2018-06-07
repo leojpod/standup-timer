@@ -2,10 +2,11 @@ module View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onWithOptions)
 import Svg
 import Svg.Path
 import Svg.Attributes exposing (viewBox)
+import Json.Decode
 import Time
 
 
@@ -24,7 +25,7 @@ view model =
                     "Get Ready"
 
                 Paused _ ->
-                    "Click/Tap anywhere to resume"
+                    "Hold on for a moment"
 
                 Ticking True _ ->
                     "We're listening"
@@ -67,7 +68,20 @@ view model =
                 Ticking False timeLeft ->
                     ( True, (model.config.allowedOverTime - timeLeft) / model.config.allowedOverTime )
     in
-        div [ class "grid-wrapper grid-wrapper-stepped", onClick ToggleTimer ]
+        div
+            [ class "grid-wrapper grid-wrapper-stepped"
+            , onClick
+                (case model.countdownState of
+                    Paused Nothing ->
+                        ToggleTimer
+
+                    Paused (Just _) ->
+                        ResetCountdown
+
+                    Ticking _ _ ->
+                        ResetCountdown
+                )
+            ]
             [ div [ class "grid" ]
                 [ div [ class "grid__col--1-of-2 grid__col--centered" ]
                     [ div [ class " flex flex-column justify-center items-center" ]
@@ -76,6 +90,23 @@ view model =
                         , clockDisplay warningMode percentLeft
                         , h2 [ class "fs2" ]
                             [ text bottomMessage ]
+                        , button
+                            [ class "r-btn r-btn-primary r-btn-large"
+                            , onWithOptions "click"
+                                { stopPropagation = True, preventDefault = True }
+                                (Json.Decode.succeed ToggleTimer)
+                            ]
+                            [ text <|
+                                case model.countdownState of
+                                    Ticking _ _ ->
+                                        "Pause"
+
+                                    Paused Nothing ->
+                                        "Start"
+
+                                    Paused (Just _) ->
+                                        "Resume"
+                            ]
                         ]
                     ]
                 ]

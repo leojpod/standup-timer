@@ -7,6 +7,7 @@ import AnimationFrame
 
 type Msg
     = ToggleTimer
+    | ResetCountdown
     | Tick Time.Time
 
 
@@ -43,6 +44,9 @@ update msg model =
                         Ticking isInTime newTimeLeft
             in
                 ( { model | countdownState = newCountDownState }, Cmd.none )
+
+        ( ResetCountdown, _ ) ->
+            ( { model | countdownState = Paused Nothing }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
