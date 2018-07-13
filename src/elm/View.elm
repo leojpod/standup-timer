@@ -107,6 +107,7 @@ view model =
                                     Paused (Just _) ->
                                         "Resume"
                             ]
+                        , audio [ src "/audio/short-beep.mp3", autoplay True, class "hidden" ] []
                         ]
                     ]
                 ]
