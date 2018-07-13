@@ -124,9 +124,9 @@ view model =
                         , audio [ src <|
                           case (warningMode, percentLeft) of
                             (True, 0) ->
-                              "/audio/flat-line-beep.mp3"
+                              "%PUBLIC_URL%/audio/flat-line-beep.mp3"
                             (True, _) ->
-                              "/audio/short-beep.mp3"
+                              "%PUBLIC_URL%/audio/short-beep.mp3"
                             (False, _) ->
                               ""
                               , autoplay True, class "hidden" ] []

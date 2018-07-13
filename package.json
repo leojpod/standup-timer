@@ -9,6 +9,7 @@
   "dependencies": {
     "@repositive/liz-skin": "^1.1.0",
     "@repositive/ui-library": "0.0.13",
+    "gh-pages": "^1.2.0",
     "hoek": "^4.2.1",
     "node-sass-chokidar": "^1.3.0"
   },
@@ -17,7 +18,8 @@
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive"
+    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "deploy": "elm-app build; gh-pages -d build"
   },
   "author": "",
   "license": "ISC"
