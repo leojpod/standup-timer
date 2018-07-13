@@ -18,6 +18,7 @@ type alias Model =
 type CountDownState
     = Paused (Maybe CountDownState)
     | Ticking Bool Time.Time
+    | Completed
 
 
 type alias Config =

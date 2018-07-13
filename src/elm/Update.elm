@@ -14,6 +14,9 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case ( msg, model.countdownState ) of
+        ( ToggleTimer, Completed ) ->
+            ( { model | countdownState = Ticking True model.config.speachTime }, Cmd.none )
+
         ( ToggleTimer, Paused Nothing ) ->
             ( { model | countdownState = Ticking True model.config.speachTime }, Cmd.none )
 
@@ -22,6 +25,9 @@ update msg model =
 
         ( ToggleTimer, Ticking _ _ ) ->
             ( { model | countdownState = Paused <| Just model.countdownState }, Cmd.none )
+
+        ( Tick diff, Completed ) ->
+            Debug.log "WTH this is not supposed to happen ... let's ignore it" ( model, Cmd.none )
 
         ( Tick diff, Paused _ ) ->
             Debug.log "WTH this is not supposed to happen ... let's ignore it" ( model, Cmd.none )
@@ -38,7 +44,7 @@ update msg model =
                                 Ticking False model.config.allowedOverTime
 
                             False ->
-                                Paused Nothing
+                                Completed
                         -- there is no state yet to mark the countdown as completed
                     else
                         Ticking isInTime newTimeLeft
@@ -54,6 +60,8 @@ subscriptions model =
     case model.countdownState of
         Paused _ ->
             Sub.none
+
+        Completed -> Sub.none
 
         Ticking _ _ ->
             AnimationFrame.diffs Tick

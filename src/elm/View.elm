@@ -21,6 +21,7 @@ view model =
     let
         headerMessage =
             case model.countdownState of
+                Completed -> "Stop talking"
                 Paused Nothing ->
                     "Get Ready"
 
@@ -35,11 +36,16 @@ view model =
 
         bottomMessage =
             case model.countdownState of
+                Completed ->
+                  "Someone else's turn"
                 Paused Nothing ->
                     "On your mark"
 
                 Paused (Just (Ticking _ timeLeft)) ->
                     (toString <| ceiling <| Time.inSeconds timeLeft)
+
+                Paused (Just (Completed)) ->
+                    Debug.crash "this should never happen!"
 
                 Paused (Just (Paused _)) ->
                     Debug.crash "this should never happen!"
@@ -49,15 +55,20 @@ view model =
 
         ( warningMode, percentLeft ) =
             case model.countdownState of
+                Completed ->
+                  ( True, 0 )
                 Paused Nothing ->
+                    -- this is just an arbitrary number to show the piece of UI
                     ( False, 0.6542 )
 
-                -- this is just an arbitrary number to show the piece of UI
                 Paused (Just (Ticking isInTime timeLeft)) ->
                     if isInTime then
                         ( False, (model.config.speachTime - timeLeft) / model.config.speachTime )
                     else
                         ( True, (model.config.allowedOverTime - timeLeft) / model.config.allowedOverTime )
+
+                Paused (Just (Completed)) ->
+                    Debug.crash "this should never happen!"
 
                 Paused (Just (Paused _)) ->
                     Debug.crash "this should never happen!"
@@ -72,6 +83,8 @@ view model =
             [ class "grid-wrapper grid-wrapper-stepped"
             , onClick
                 (case model.countdownState of
+                    Completed ->
+                        ResetCountdown
                     Paused Nothing ->
                         ToggleTimer
 
@@ -106,8 +119,17 @@ view model =
 
                                     Paused (Just _) ->
                                         "Resume"
+                                    Completed -> "Reset"
                             ]
-                        , audio [ src "/audio/short-beep.mp3", autoplay True, class "hidden" ] []
+                        , audio [ src <|
+                          case (warningMode, percentLeft) of
+                            (True, 0) ->
+                              "/audio/flat-line-beep.mp3"
+                            (True, _) ->
+                              "/audio/short-beep.mp3"
+                            (False, _) ->
+                              ""
+                              , autoplay True, class "hidden" ] []
                         ]
                     ]
                 ]
