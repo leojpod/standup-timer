@@ -1,11 +1,11 @@
-module Model exposing (Model, CountDownState(..), initModel)
+module Model exposing (CountDownState(..), Model, initModel, simpleConfig)
 
 import Time
 
 
 type alias Model =
-    { config : Config
-    , countdownState : CountDownState
+    { countdownState : CountDownState
+    , config : Config
     }
 
 
@@ -27,15 +27,16 @@ type alias Config =
     }
 
 
-basicConfig : Config
-basicConfig =
-    { speachTime = 30.0 * Time.second
-    , allowedOverTime = 5.0 * Time.second
+simpleConfig : Int -> Config
+simpleConfig baseTime =
+    { speachTime = baseTime |> toFloat |> (*) Time.second
+    , allowedOverTime = (toFloat baseTime / 6) |> ceiling |> toFloat |> (*) Time.second
     }
 
 
-initModel : Model
+initModel : Maybe String -> Model
 initModel =
-    { config = basicConfig
-    , countdownState = Paused Nothing
-    }
+    Maybe.andThen (String.toInt >> Result.toMaybe)
+        >> Maybe.withDefault 60
+        >> simpleConfig
+        >> Model (Paused Nothing)

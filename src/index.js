@@ -2,6 +2,8 @@ import './main.css'
 import { Main } from './elm/Main.elm'
 import registerServiceWorker from './registerServiceWorker'
 
-Main.embed(document.getElementById('root'))
+const params = (new URL(window.location)).searchParams
+const timeParam = params && params.get('time')
+Main.embed(document.getElementById('root'), timeParam || null)
 
 registerServiceWorker()

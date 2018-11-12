@@ -1,30 +1,29 @@
-module Main exposing (..)
-
-import Html
-
+module Main exposing (init, main)
 
 -- local imports
 
+import Html
 import Model exposing (Model, initModel)
+import Update exposing (Msg, subscriptions, update)
 import View exposing (view)
-import Update exposing (Msg, update, subscriptions)
+
 
 
 ---- INIT ----
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( initModel, Cmd.none )
+init : Maybe String -> ( Model, Cmd Msg )
+init customTime =
+    ( initModel customTime, Cmd.none )
 
 
 
 ---- PROGRAM ----
 
 
-main : Program Never Model Msg
+main : Program (Maybe String) Model Msg
 main =
-    Html.program
+    Html.programWithFlags
         { view = view
         , init = init
         , update = update
