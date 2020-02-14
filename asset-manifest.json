@@ -6,7 +6,7 @@
   "runtime~main.js.map": "/standup-timer/static/js/runtime~main.1b922744.js.map",
   "vendors~main.js": "/standup-timer/static/js/vendors~main.3ca81432.chunk.js",
   "vendors~main.js.map": "/standup-timer/static/js/vendors~main.3ca81432.chunk.js.map",
-  "./service-worker.js": "/./service-worker.js",
+  "./service-worker.js": "/standup-timer/./service-worker.js",
   "audio/flat-line-beep.mp3": "/standup-timer/audio/flat-line-beep.mp3",
   "audio/short-beep.mp3": "/standup-timer/audio/short-beep.mp3",
   "favicon.ico": "/standup-timer/favicon.ico",
