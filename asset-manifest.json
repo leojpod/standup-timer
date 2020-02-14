@@ -1,9 +1,9 @@
 {
   "main.css": "/standup-timer/static/css/main.cc310fc9.chunk.css",
-  "main.js": "/standup-timer/static/js/main.94545f35.chunk.js",
-  "main.js.map": "/standup-timer/static/js/main.94545f35.chunk.js.map",
-  "runtime~main.js": "/standup-timer/static/js/runtime~main.1b922744.js",
-  "runtime~main.js.map": "/standup-timer/static/js/runtime~main.1b922744.js.map",
+  "main.js": "/standup-timer/static/js/main.32d152e0.chunk.js",
+  "main.js.map": "/standup-timer/static/js/main.32d152e0.chunk.js.map",
+  "runtime~main.js": "/standup-timer/static/js/runtime~main.ed5d0a57.js",
+  "runtime~main.js.map": "/standup-timer/static/js/runtime~main.ed5d0a57.js.map",
   "vendors~main.js": "/standup-timer/static/js/vendors~main.3ca81432.chunk.js",
   "vendors~main.js.map": "/standup-timer/static/js/vendors~main.3ca81432.chunk.js.map",
   "./service-worker.js": "/standup-timer/./service-worker.js",
@@ -13,5 +13,5 @@
   "index.html": "/standup-timer/index.html",
   "logo.svg": "/standup-timer/logo.svg",
   "manifest.json": "/standup-timer/manifest.json",
-  "precache-manifest.464fd3daeeea5f25d406d4ca1d4994a1.js": "/precache-manifest.464fd3daeeea5f25d406d4ca1d4994a1.js"
+  "precache-manifest.c5d317d05dbc163c64a0cf936016186c.js": "/standup-timer/precache-manifest.c5d317d05dbc163c64a0cf936016186c.js"
 }
