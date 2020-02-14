@@ -19,7 +19,7 @@
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
-    "deploy": "elm-app build; gh-pages -d build"
+    "deploy": "PUBLIC_URL='/standup-timer' elm-app build; gh-pages -d build"
   },
   "author": "",
   "license": "ISC"
