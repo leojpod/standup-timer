@@ -1,7 +1,5 @@
 module Model exposing (CountDownState(..), Model, initModel, simpleConfig)
 
-import Time
-
 
 type alias Model =
     { countdownState : CountDownState
@@ -17,26 +15,26 @@ type alias Model =
 -}
 type CountDownState
     = Paused (Maybe CountDownState)
-    | Ticking Bool Time.Time
+    | Ticking Bool Float
     | Completed
 
 
 type alias Config =
-    { speachTime : Time.Time
-    , allowedOverTime : Time.Time
+    { speachTime : Float
+    , allowedOverTime : Float
     }
 
 
 simpleConfig : Int -> Config
 simpleConfig baseTime =
-    { speachTime = baseTime |> toFloat |> (*) Time.second
-    , allowedOverTime = (toFloat baseTime / 6) |> ceiling |> toFloat |> (*) Time.second
+    { speachTime = baseTime |> toFloat |> (*) 1000.0
+    , allowedOverTime = (toFloat baseTime / 6) |> ceiling |> toFloat |> (*) 1000.0
     }
 
 
 initModel : Maybe String -> Model
 initModel =
-    Maybe.andThen (String.toInt >> Result.toMaybe)
+    Maybe.andThen String.toInt
         >> Maybe.withDefault 60
         >> simpleConfig
         >> Model (Paused Nothing)

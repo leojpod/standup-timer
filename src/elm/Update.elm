@@ -1,14 +1,13 @@
-module Update exposing (Msg(..), update, subscriptions)
+module Update exposing (Msg(..), subscriptions, update)
 
-import Model exposing (Model, CountDownState(..))
-import Time
-import AnimationFrame
+import Browser.Events
+import Model exposing (CountDownState(..), Model)
 
 
 type Msg
     = ToggleTimer
     | ResetCountdown
-    | Tick Time.Time
+    | Tick Float
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -26,11 +25,13 @@ update msg model =
         ( ToggleTimer, Ticking _ _ ) ->
             ( { model | countdownState = Paused <| Just model.countdownState }, Cmd.none )
 
-        ( Tick diff, Completed ) ->
-            Debug.log "WTH this is not supposed to happen ... let's ignore it" ( model, Cmd.none )
+        ( Tick _, Completed ) ->
+            -- this should never happen so let's ignore it
+            ( model, Cmd.none )
 
-        ( Tick diff, Paused _ ) ->
-            Debug.log "WTH this is not supposed to happen ... let's ignore it" ( model, Cmd.none )
+        ( Tick _, Paused _ ) ->
+            -- this should never happen so let's ignore it
+            ( model, Cmd.none )
 
         ( Tick diff, Ticking isInTime timeLeft ) ->
             let
@@ -39,17 +40,17 @@ update msg model =
 
                 newCountDownState =
                     if newTimeLeft < 0 then
-                        case isInTime of
-                            True ->
-                                Ticking False model.config.allowedOverTime
+                        if isInTime then
+                            Ticking False model.config.allowedOverTime
 
-                            False ->
-                                Completed
+                        else
+                            Completed
                         -- there is no state yet to mark the countdown as completed
+
                     else
                         Ticking isInTime newTimeLeft
             in
-                ( { model | countdownState = newCountDownState }, Cmd.none )
+            ( { model | countdownState = newCountDownState }, Cmd.none )
 
         ( ResetCountdown, _ ) ->
             ( { model | countdownState = Paused Nothing }, Cmd.none )
@@ -61,7 +62,8 @@ subscriptions model =
         Paused _ ->
             Sub.none
 
-        Completed -> Sub.none
+        Completed ->
+            Sub.none
 
         Ticking _ _ ->
-            AnimationFrame.diffs Tick
+            Browser.Events.onAnimationFrameDelta Tick

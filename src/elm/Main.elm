@@ -2,7 +2,7 @@ module Main exposing (init, main)
 
 -- local imports
 
-import Html
+import Browser
 import Model exposing (Model, initModel)
 import Update exposing (Msg, subscriptions, update)
 import View exposing (view)
@@ -23,8 +23,8 @@ init customTime =
 
 main : Program (Maybe String) Model Msg
 main =
-    Html.programWithFlags
-        { view = view
+    Browser.document
+        { view = view >> List.singleton >> Browser.Document "Standup timer"
         , init = init
         , update = update
         , subscriptions = subscriptions
